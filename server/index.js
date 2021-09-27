@@ -27,7 +27,9 @@ mongoose
 app.get("/", function (req, res) {
   res.send("hello dsd");
 });
-
+app.get("/api/hello", (req, res) => {
+  res.send("hello!");
+});
 app.post(`/api/users/register`, (req, res) => {
   // 회원가입 정보들을 client 에서 가져오면 database에 넣어준다
   const user = new User(req.body);
