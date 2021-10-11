@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-
-function LoginPage() {
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../_actions/user_action";
+function LoginPage(props: any) {
+  const dispatch = useDispatch();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -14,11 +16,27 @@ function LoginPage() {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    console.log("go");
+    const body = {
+      email: Email,
+      password: Password,
+    };
+    dispatch(loginUser(body)).then((res: any) => {
+      if (res.payload.loginSuccess) {
+        props.history.push("/");
+      }
+    });
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100vh",
+      }}
+    >
       <form onSubmit={onSubmit}>
         <label>Email</label>
         <input type="email" value={Email} onChange={onEmailHandler} />

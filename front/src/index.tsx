@@ -9,24 +9,39 @@ import { applyMiddleware, createStore, compose } from "redux";
 import promiseMiddleware from "redux-promise";
 import ReduxThunk from "redux-thunk";
 import Reducer from "./_reducers";
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+import configureStore from "./_reducers/configureStore";
+// declare global {
+//   interface Window {
+//     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+//   }
+// }
 
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = configureStore();
 const createStoreWithMiddleware = applyMiddleware(
   promiseMiddleware,
   ReduxThunk
 )(createStore);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(Reducer, composeEnhancers())}>
+  <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById("root")
 );
+
+// const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore)
+
+// ReactDOM.render(
+//     <Provider
+//         store={createStoreWithMiddleware(Reducer,
+//             window.__REDUX_DEVTOOLS_EXTENSION__ &&
+//             window.__REDUX_DEVTOOLS_EXTENSION__()
+//         )}
+//     >
+//         <App />
+//     </Provider>
+//     , document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
