@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
-function LoginPage(props: any) {
+import { withRouter } from "react-router-dom";
+function LoginPage(props: any): ReactElement<any, any> {
   const dispatch = useDispatch();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -37,7 +38,10 @@ function LoginPage(props: any) {
         height: "100vh",
       }}
     >
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={onSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <label>Email</label>
         <input type="email" value={Email} onChange={onEmailHandler} />
         <label>password</label>
@@ -49,4 +53,4 @@ function LoginPage(props: any) {
   );
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);
